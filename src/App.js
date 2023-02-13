@@ -1,5 +1,5 @@
 import { KeyboardControls } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { Suspense } from 'react';
 import './App.css';
 import Main from './components';
