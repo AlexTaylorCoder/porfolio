@@ -1,33 +1,35 @@
-import { OrbitControls, PerspectiveCamera, Scroll, ScrollControls, useKeyboardControls, useScroll } from "@react-three/drei"
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import degtoradians from "../utils/degstoradians"
 import { extend } from "@react-three/fiber"
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader"
 import roboto from "../assets/Roboto Serif 20pt_Italic.json"
-import { useState, useRef } from "react"
+import { useEffect, useRef } from "react"
+import { lerp } from "three/src/math/MathUtils"
+import { useSpring } from "@react-spring/web"
+import { Vector3 } from "three"
 
 
 extend({TextGeometry})
 
 //Use scroll controls
-function Main(wheel) {
+function Main(cam,setCam) {
+    const camRef = useRef()
     const font = new FontLoader().parse(roboto)
-    const [setKeys,getKeys] = useKeyboardControls()
-    const [setcamPos,getcamPos] = useState([])
-    const scrollData = useScroll()
-    console.log(wheel.wheel?.deltaY)
-    console.log(getcamPos)
-    useFrame((state)=> {
 
-    } )
+    useFrame(()=> {
+        const vec = new Vector3(cam.cam[0],cam.cam[1],cam.cam[2])
+            
+        camRef.current.position.lerp(vec,0.5)
+    })
 
     return (
         <>
   
-            <PerspectiveCamera makeDefault position={[0,8,15]}/>
+            <PerspectiveCamera ref={camRef} makeDefault position={[0,8,15]}/>
             {/* <OrbitControls/> */}
-            <mesh onWheel={e=>console.log} position={[-20,0,-10]}>
+            <mesh position={[-20,0,-10]}>
                 <textGeometry args={['Alex Taylor',{font,size:3,height:1}]}/>
                 <meshStandardMaterial emissive="#FFD700" emissiveIntensity=".01" color = "black"/>
             </mesh>
