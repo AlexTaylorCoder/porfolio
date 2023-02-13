@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+#app {
+  height: 100vh !important;
+  background-color: rgb(15, 15, 15);
+
+}
+body {
+  height: 100vh;
+
+}
